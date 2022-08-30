@@ -13,8 +13,7 @@
 using static System.Console;
 Clear();
 
-//WriteLine($"Task # 54: Define a two-dimensional array. Write a program to sort in descending order the elements of each row of a two-dimensional array");
-WriteLine("Enter the array size: rows, columns and range of random values:");
+
 int m = InputNumbers("Enter the number of rows in the array: ");
 int n = InputNumbers("Enter the number of columns in the array: ");
 int range = InputNumbers("Enter range: from 0 to ");
@@ -23,7 +22,7 @@ int[,] array = new int[m, n];
 CreateArray(array);
 WriteArray(array);
 
-WriteLine($"\nSorted array: ");
+WriteLine($"Sorted array: ");
 OrderArrayLines(array);
 WriteArray(array);
 
