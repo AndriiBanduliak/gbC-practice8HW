@@ -1,60 +1,59 @@
-﻿/*Задача 56: Задайте прямоугольный двумерный массив. 
-Напишите программу, которая будет находить строку с наименьшей суммой элементов.
-
-Например, задан массив:
-
-1 4 7 2
-
-5 9 2 3
-
-8 4 2 4
-
-5 2 6 7
-
-Программа считает сумму элементов в каждой строке и выдаёт номер строки с наименьшей суммой элементов: 1 строка
+﻿/*
+Задача 58: Задайте две матрицы. Напишите программу, которая будет находить произведение двух матриц.
+Например, даны 2 матрицы:
+2 4 | 3 4
+3 2 | 3 3
+Результирующая матрица будет:
+18 20
+15 18
 */
 
 using static System.Console;
 Clear();
 
+WriteLine("\nEnter the sizes of the matrices and the range of random values: ");
+int m = InputNumbers("Enter the number of rows of the 1st matrix: ");
+int n = InputNumbers("Enter the number of columns of the 1st and rows: ");
+int s = InputNumbers("Enter the numbers of rows of the 2nd matrix: ");
+int p = InputNumbers("Enter the number of columns of the 2nd matrix: ");
+int range = InputNumbers("Enter a range of random numbers: from 0 to ");
 
-int m = InputNumbers("Enter the number of rows in the array: ");
-int n = InputNumbers("Enter the number of columns in the array: ");
-int range = InputNumbers("Enter range: from 0 to ");
+int[,] firstMartrix = new int[m, n];
+CreateArray(firstMartrix);
+WriteLine($"\nFirst matrix:");
+WriteArray(firstMartrix);
 
-int[,] array = new int[m, n];
-CreateArray(array);
-WriteArray(array);
+int[,] secomdMartrix = new int[s, p];
+CreateArray(secomdMartrix);
+WriteLine($"\nSecond matrix:");
+WriteArray(secomdMartrix);
 
-int minSumLine = 0;
-int sumLine = SumLineElements(array, 0);
-for (int i = 1; i < array.GetLength(0); i++)
+int[,] resultMatrix = new int[m,p];
+
+MultiplyMatrix(firstMartrix, secomdMartrix, resultMatrix);
+WriteLine($"\nMultiplication of the first and the second matrices:");
+WriteArray(resultMatrix);
+
+void MultiplyMatrix(int[,] firstMartrix, int[,] secomdMartrix, int[,] resultMatrix)
 {
-  int tempSumLine = SumLineElements(array, i);
-  if (sumLine > tempSumLine)
+  for (int i = 0; i < resultMatrix.GetLength(0); i++)
   {
-    sumLine = tempSumLine;
-    minSumLine = i;
+    for (int j = 0; j < resultMatrix.GetLength(1); j++)
+    {
+      int sum = 0;
+      for (int k = 0; k < firstMartrix.GetLength(1); k++)
+      {
+        sum += firstMartrix[i,k] * secomdMartrix[k,j];
+      }
+      resultMatrix[i,j] = sum;
+    }
   }
-}
-
-WriteLine($"The line with the smallest amount of elements is {minSumLine+1} ({sumLine})  ");
-
-
-int SumLineElements(int[,] array, int i)
-{
-  int sumLine = array[i,0];
-  for (int j = 1; j < array.GetLength(1); j++)
-  {
-    sumLine += array[i,j];
-  }
-  return sumLine;
 }
 
 int InputNumbers(string input)
 {
   Write(input);
-  int output = Convert.ToInt32(Console.ReadLine());
+  int output = Convert.ToInt32(ReadLine());
   return output;
 }
 
