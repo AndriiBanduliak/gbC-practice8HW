@@ -38,7 +38,7 @@ for (int i = 1; i < array.GetLength(0); i++)
   }
 }
 
-WriteLine($"The {minSumLine+1} line with the smallest amount of elements ({sumLine})  ");
+WriteLine($"The line with the smallest amount of elements is {minSumLine+1} ({sumLine})  ");
 
 
 int SumLineElements(int[,] array, int i)
