@@ -11,7 +11,7 @@ using static System.Console;
 Clear();
 
 
-int n = 4;
+int n = 6;
 int[,] sqareMatrix = new int[n, n];
 
 int temp = 1;
