@@ -1,81 +1,82 @@
 ﻿/*
-Задача 58: Задайте две матрицы. Напишите программу, которая будет находить произведение двух матриц.
-Например, даны 2 матрицы:
-2 4 | 3 4
-3 2 | 3 3
-Результирующая матрица будет:
-18 20
-15 18
+Задача 60. ...Сформируйте трёхмерный массив из неповторяющихся двузначных чисел.
+Напишите программу, которая будет построчно выводить массив, добавляя индексы каждого элемента.
+Массив размером 2 x 2 x 2
+66(0,0,0) 25(0,1,0)
+34(1,0,0) 41(1,1,0)
+27(0,0,1) 90(0,1,1)
+26(1,0,1) 55(1,1,1)
 */
 
 using static System.Console;
 Clear();
 
-WriteLine("\nEnter the sizes of the matrices and the range of random values: ");
-int m = InputNumbers("Enter the number of rows of the 1st matrix: ");
-int n = InputNumbers("Enter the number of columns of the 1st and rows: ");
-int s = InputNumbers("Enter the numbers of rows of the 2nd matrix: ");
-int p = InputNumbers("Enter the number of columns of the 2nd matrix: ");
-int range = InputNumbers("Enter a range of random numbers: from 0 to ");
+WriteLine("Enter the size of the array X * Y * Z:");
+int x = InputNumbers("Enter X: ");
+int y = InputNumbers("Enter Y: ");
+int z = InputNumbers("Enter Z: ");
+WriteLine("");
 
-int[,] firstMartrix = new int[m, n];
-CreateArray(firstMartrix);
-WriteLine($"\nFirst matrix:");
-WriteArray(firstMartrix);
-
-int[,] secomdMartrix = new int[s, p];
-CreateArray(secomdMartrix);
-WriteLine($"\nSecond matrix:");
-WriteArray(secomdMartrix);
-
-int[,] resultMatrix = new int[m,p];
-
-MultiplyMatrix(firstMartrix, secomdMartrix, resultMatrix);
-WriteLine($"\nMultiplication of the first and the second matrices:");
-WriteArray(resultMatrix);
-
-void MultiplyMatrix(int[,] firstMartrix, int[,] secomdMartrix, int[,] resultMatrix)
-{
-  for (int i = 0; i < resultMatrix.GetLength(0); i++)
-  {
-    for (int j = 0; j < resultMatrix.GetLength(1); j++)
-    {
-      int sum = 0;
-      for (int k = 0; k < firstMartrix.GetLength(1); k++)
-      {
-        sum += firstMartrix[i,k] * secomdMartrix[k,j];
-      }
-      resultMatrix[i,j] = sum;
-    }
-  }
-}
+int[,,] array3D = new int[x, y, z];
+CreateArray(array3D);
+WriteArray(array3D);
 
 int InputNumbers(string input)
 {
   Write(input);
-  int output = Convert.ToInt32(ReadLine());
+  int output = Convert.ToInt32(Console.ReadLine());
   return output;
 }
 
-void CreateArray(int[,] array)
+void WriteArray (int[,,] array3D)
 {
-  for (int i = 0; i < array.GetLength(0); i++)
+  for (int i = 0; i < array3D.GetLength(0); i++)
   {
-    for (int j = 0; j < array.GetLength(1); j++)
+    for (int j = 0; j < array3D.GetLength(1); j++)
     {
-      array[i, j] = new Random().Next(range);
+        Write($"X({i}) Y({j}) ");
+      for (int k = 0; k < array3D.GetLength(2); k++)
+      {
+        Write( $"Z({k})={array3D[i,j,k]}; ");
+      }
+      WriteLine();
     }
+    WriteLine();
   }
 }
 
-void WriteArray (int[,] array)
+void CreateArray(int[,,] array3D)
 {
-  for (int i = 0; i < array.GetLength(0); i++)
+  int[] temp = new int[array3D.GetLength(0) * array3D.GetLength(1) * array3D.GetLength(2)];
+  int  number;
+  for (int i = 0; i < temp.GetLength(0); i++)
   {
-    for (int j = 0; j < array.GetLength(1); j++)
+    temp[i] = new Random().Next(10, 100);
+    number = temp[i];
+    if (i >= 1)
     {
-      Write(array[i,j] + " ");
+      for (int j = 0; j < i; j++)
+      {
+        while (temp[i] == temp[j])
+        {
+          temp[i] = new Random().Next(10, 100);
+          j = 0;
+          number = temp[i];
+        }
+          number = temp[i];
+      }
     }
-    WriteLine();
+  }
+  int count = 0; 
+  for (int x = 0; x < array3D.GetLength(0); x++)
+  {
+    for (int y = 0; y < array3D.GetLength(1); y++)
+    {
+      for (int z = 0; z < array3D.GetLength(2); z++)
+      {
+        array3D[x, y, z] = temp[count];
+        count++;
+      }
+    }
   }
 }
